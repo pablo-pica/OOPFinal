@@ -1,0 +1,6 @@
+Receipt
+Date: 2024-11-25 00:27:38
+Items:
+- Student Meal - Classic Burger w/ Medium Fries and Coke: Php 80.0
+
+Total: Php 80.0

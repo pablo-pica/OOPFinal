@@ -1,0 +1,7 @@
+Receipt
+Date: 2024-11-25 00:27:12
+Items:
+- Spaghetti: Php 80.0
+- Cheeseburger: Php 69.99
+
+Total: Php 149.99
