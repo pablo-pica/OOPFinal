@@ -61,14 +61,14 @@ public class Run {
             System.out.println("2. View Current Order and Delete Items");
             System.out.println("3. Checkout");
             System.out.println("4. Exit");
-            System.out.print("Choose an option: ");
+            System.out.print("\nChoose an option: ");
             try {
                 int choice = scanner.nextInt();
-                // scanner.nextLine();
+                scanner.nextLine();
 
                 switch (choice) {
                     case 1:
-                        System.out.println("\n == Menu ==\n");
+                        System.out.println("\n=== Menu ===\n");
                         ArrayList<Category> categories = menuCentral.getCategories();
                         for (int i = 0; i < categories.size(); i++) {
                             System.out.println((i + 1) + ". " + categories.get(i).getName());
@@ -79,7 +79,7 @@ public class Run {
 
                         if (categoryChoice > 0 && categoryChoice <= categories.size()) {
                             Category selectedCategory = categories.get(categoryChoice - 1);
-                            System.out.println("\n--- " + selectedCategory.getName() + " ---");
+                            System.out.println("\n=== " + selectedCategory.getName() + " ===");
                             ArrayList<MenuItem> items = selectedCategory.getItems();
                             System.out.println("0. Go back to main menu");
                             for (int i = 0; i < items.size(); i++) {
@@ -133,7 +133,7 @@ public class Run {
                         break;
 
                     case 2:
-                        System.out.println("\n--- Current Order ---");
+                        System.out.println("\n=== Current Order ===");
                         ArrayList<MenuItem> orderItems = currentOrder.getItems();
                         if (orderItems.isEmpty()) {
                             System.out.println("Your order is empty.");
@@ -162,7 +162,7 @@ public class Run {
                         break;
 
                     case 3:
-                        System.out.println("\n--- Checkout ---");
+                        System.out.println("\n=== Checkout ===");
                         ArrayList<MenuItem> checkoutItems = currentOrder.getItems();
                         if (checkoutItems.isEmpty()) {
                             System.out.println("Your order is empty. Nothing to checkout.");
