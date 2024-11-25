@@ -10,31 +10,37 @@ public class Run {
     Category burger = new Category("Burger");
         burger.addItem(new MenuItem("Classic Burger", 59.99));
         burger.addItem(new MenuItem("Cheeseburger", 69.99));
+        burger.addItem(new MenuItem("TLC Burger", 89));
         burger.addItem(new MenuItem("Infamous Spicy Triple Beef Angus A5 Wagyu Burger", 999.99));
         burger.addItem(new MenuItem("1-inch Pizza Burger", 8.99));
 
     Category pasta = new Category("Pasta");
         pasta.addItem(new MenuItem("Spaghetti", 80.00));
+        pasta.addItem(new MenuItem("Carbonara", 80));
+        pasta.addItem(new MenuItem("Spaghetti Aglio e Olio", 220));
+        pasta.addItem(new MenuItem("Cacio e Pepe", 260));
+        pasta.addItem(new MenuItem("Fettuccine", 250));
 
     Category drinks = new Category("Drinks");
+        drinks.addItem(new CustomDrink("Water", 0.00, false));
         drinks.addItem(new CustomDrink("Coke", 20.00, false));
         drinks.addItem(new CustomDrink("Sprite", 20.00, false));
         drinks.addItem(new CustomDrink("Iced Tea", 20.00, false ));
-        drinks.addItem(new CustomDrink("Water", 0.00, false));
         drinks.addItem(new CustomDrink("Coffee", 30.00, true));
 
     Category chicken = new Category("Chicken");
-        chicken.addItem(new MenuItem("Fried Chicken", 90.00));
+        chicken.addItem(new MenuItem("Fried Chicken", 80.00));
+        chicken.addItem(new MenuItem("Barbeque Chicken", 105.00));
         chicken.addItem(new MenuItem("Chicken Parmesan", 120.00));
         chicken.addItem(new MenuItem("Chicken Alfredo", 120.00));
-        chicken.addItem(new MenuItem("Barbeque Chicken", 105.00));
+        chicken.addItem(new MenuItem("Braised Chicken", 210));
 
         //smart genius way i did so i dont have to make this complex was that we just restrict them from customizing their drink i think
     Category special = new Category("Combo Meals");
         special.addItem(new SpecialCombo("Student Meal - Classic Burger w/ Medium Fries and Coke", 80.00, new CustomDrink("Coke", 0.00, false))); 
         special.addItem(new SpecialCombo("Classic Fast Food - Cheeseburger w/ Medium Fries and Sprite", 90.00, new CustomDrink("Sprite", 0.00, false))); 
         special.addItem(new SpecialCombo("Chicken Meal - 1pc Fried Chicken w/ Coke", 105.00, new CustomDrink("Coke", 0.00, false))); 
-   
+
     menuCentral.addCategory(burger);
     menuCentral.addCategory(pasta);
     menuCentral.addCategory(drinks);
