@@ -17,6 +17,6 @@ public class MenuItem {
     }
 
     public String toString() {
-        return name + " - Php " + price;
+        return name + " - Php " + String.format("%.2f", price);
     }
 }

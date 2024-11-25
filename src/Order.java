@@ -54,8 +54,8 @@ class Order {
             writer.write("Items:\n");
 
         //list of orders in receipt
-        for(MenuItem item : items){
-            writer.write("- " + item.getName() + ": Php " + item.getPrice() + "\n");
+        for(MenuItem item : items){ 
+            writer.write("- " + item.getName() + ": Php " + String.format("%.2f", item.getPrice())  + "\n");
         }
 
         writer.write("\nTotal: Php " + calculateTotal() + "\n"); 

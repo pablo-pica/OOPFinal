@@ -1,0 +1,7 @@
+Receipt
+Date: 2024-11-25 12:56:01
+Items:
+- TLC Burger: Php 89.99
+- Spaghetti Aglio e Olio: Php 220.00
+
+Total: Php 309.99
