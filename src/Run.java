@@ -47,7 +47,7 @@ public class Run {
     while(running){
         System.out.println("\n=== Let Eric Cook ===");
         System.out.println("1. View Menu by Category");
-        System.out.println("2. View Current Order");
+        System.out.println("2. View Current Order and Delete Items");
         System.out.println("3. Checkout");
         System.out.println("4. Exit");
         System.out.print("Choose an option: ");
@@ -124,11 +124,27 @@ public class Run {
                     ArrayList<MenuItem> orderItems = currentOrder.getItems();
                     if (orderItems.isEmpty()) {
                         System.out.println("Your order is empty.");
+                        break;
                     } else {
-                        for (MenuItem item : orderItems) {
-                            System.out.println("- " + item);
+                        for (int i = 0; i < orderItems.size(); i++){
+                            System.out.println((i + 1) + ". " + orderItems.get(i));
                         }
                         System.out.println("Total: Php " + currentOrder.calculateTotal());
+                    }
+                    System.out.print("Would you like to remove an item from your order? (yes/no): ");
+                    String removeItemChoice = scanner.nextLine();
+                    if (removeItemChoice.equalsIgnoreCase("yes")) {
+                        System.out.print("Enter item number to remove from order (or 0 to go back): ");
+                        int removeChoice = scanner.nextInt();
+                        scanner.nextLine();
+                        if (removeChoice > 0 && removeChoice <= orderItems.size()) {
+                            MenuItem removedItem = orderItems.remove(removeChoice - 1);
+                            System.out.println("Removed: " + removedItem.getName() + " from your order.");
+                        } else if (removeChoice == 0) {
+                            System.out.println("Returning to the main menu.");
+                        } else {
+                            System.out.println("Invalid choice! No item removed.");
+                        }
                     }
                     break;
 
@@ -162,7 +178,5 @@ public class Run {
                 System.out.println("Invalid choice! Please try again.");
                 break;
             }
-        }
-        scanner.close();
-    } 
-}
+        }scanner.close();
+}}

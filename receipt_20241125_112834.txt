@@ -1,0 +1,7 @@
+Receipt
+Date: 2024-11-25 11:28:34
+Items:
+- Chicken Meal - 1pc Fried Chicken w/ Coke: Php 105.0
+- Chicken Alfredo: Php 120.0
+
+Total: Php 225.0
