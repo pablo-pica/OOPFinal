@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class Run {
     public static void main(String[] args) {
@@ -61,134 +62,138 @@ public class Run {
             System.out.println("3. Checkout");
             System.out.println("4. Exit");
             System.out.print("Choose an option: ");
+            try {
+                int choice = scanner.nextInt();
+                // scanner.nextLine();
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (choice) {
-                case 1:
-                    System.out.println("\n == Menu ==\n");
-                    ArrayList<Category> categories = menuCentral.getCategories();
-                    for (int i = 0; i < categories.size(); i++) {
-                        System.out.println((i + 1) + ". " + categories.get(i).getName());
-                    }
-                    System.out.print("\nSelect your choice: ");
-                    int categoryChoice = scanner.nextInt();
-                    scanner.nextLine();
-
-                    if (categoryChoice > 0 && categoryChoice <= categories.size()) {
-                        Category selectedCategory = categories.get(categoryChoice - 1);
-                        System.out.println("\n--- " + selectedCategory.getName() + " ---");
-                        ArrayList<MenuItem> items = selectedCategory.getItems();
-                        System.out.println("0. Go back to main menu");
-                        for (int i = 0; i < items.size(); i++) {
-                            System.out.println((i + 1) + ". " + items.get(i));
+                switch (choice) {
+                    case 1:
+                        System.out.println("\n == Menu ==\n");
+                        ArrayList<Category> categories = menuCentral.getCategories();
+                        for (int i = 0; i < categories.size(); i++) {
+                            System.out.println((i + 1) + ". " + categories.get(i).getName());
                         }
-
-                        System.out.print("Enter item number to add to order: ");
-
-                        int itemChoice = scanner.nextInt();
+                        System.out.print("\nSelect your choice: ");
+                        int categoryChoice = scanner.nextInt();
                         scanner.nextLine();
 
-                        if (itemChoice > 0 && itemChoice <= items.size()) {
-                            MenuItem selectedItem = items.get(itemChoice - 1);
-
-                            if (selectedItem instanceof CustomDrink) {
-                                CustomDrink drink = (CustomDrink) selectedItem;
-                                System.out.println("Customize your drink:");
-                                System.out.println("1. Add Ice (only for cold drinks)");
-                                System.out.println("2. Add Additional Sugar");
-                                System.out.println("3. No Customization");
-                                System.out.print("Choose an option: ");
-                                int customizationChoice = scanner.nextInt();
-                                scanner.nextLine(); // Consume newline
-
-                                switch (customizationChoice) {
-                                    case 1:
-                                        drink.addIce();
-                                        break;
-                                    case 2:
-                                        drink.addAdditionalSugar();
-                                        break;
-                                    case 3:
-                                        System.out.println("No customization applied.");
-                                        break;
-                                    default:
-                                        System.out.println("Invalid choice. No customization applied.");
-                                }
+                        if (categoryChoice > 0 && categoryChoice <= categories.size()) {
+                            Category selectedCategory = categories.get(categoryChoice - 1);
+                            System.out.println("\n--- " + selectedCategory.getName() + " ---");
+                            ArrayList<MenuItem> items = selectedCategory.getItems();
+                            System.out.println("0. Go back to main menu");
+                            for (int i = 0; i < items.size(); i++) {
+                                System.out.println((i + 1) + ". " + items.get(i));
                             }
 
-                            currentOrder.addItem(items.get(itemChoice - 1));
-                            System.out.println("Item added to your order.");
+                            System.out.print("Enter item number to add to order: ");
 
-                        } else if (itemChoice == 0) {
-                            System.out.println("Going back to main menu.");
+                            int itemChoice = scanner.nextInt();
+                            scanner.nextLine();
+
+                            if (itemChoice > 0 && itemChoice <= items.size()) {
+                                MenuItem selectedItem = items.get(itemChoice - 1);
+
+                                if (selectedItem instanceof CustomDrink) {
+                                    CustomDrink drink = (CustomDrink) selectedItem;
+                                    System.out.println("Customize your drink:");
+                                    System.out.println("1. Add Ice (only for cold drinks)");
+                                    System.out.println("2. Add Additional Sugar");
+                                    System.out.println("3. No Customization");
+                                    System.out.print("Choose an option: ");
+                                    int customizationChoice = scanner.nextInt();
+                                    scanner.nextLine(); // Consume newline
+
+                                    switch (customizationChoice) {
+                                        case 1:
+                                            drink.addIce();
+                                            break;
+                                        case 2:
+                                            drink.addAdditionalSugar();
+                                            break;
+                                        case 3:
+                                            System.out.println("No customization applied.");
+                                            break;
+                                        default:
+                                            System.out.println("Invalid choice. No customization applied.");
+                                    }
+                                }
+
+                                currentOrder.addItem(items.get(itemChoice - 1));
+                                System.out.println("Item added to your order.");
+
+                            } else if (itemChoice == 0) {
+                                System.out.println("Going back to main menu.");
+                            } else {
+                                System.out.println("Invalid item number.");
+                            }
                         } else {
-                            System.out.println("Invalid item number.");
+                            System.out.println("Invalid category number.");
                         }
-                    } else {
-                        System.out.println("Invalid category number.");
-                    }
-                    break;
-
-                case 2:
-                    System.out.println("\n--- Current Order ---");
-                    ArrayList<MenuItem> orderItems = currentOrder.getItems();
-                    if (orderItems.isEmpty()) {
-                        System.out.println("Your order is empty.");
                         break;
-                    } else {
-                        for (int i = 0; i < orderItems.size(); i++) {
-                            System.out.println((i + 1) + ". " + orderItems.get(i));
-                        }
-                        System.out.println("Total: Php " + currentOrder.calculateTotal());
-                    }
-                    System.out.print("Would you like to remove an item from your order? (yes/no): ");
-                    String removeItemChoice = scanner.nextLine();
-                    if (removeItemChoice.equalsIgnoreCase("yes")) {
-                        System.out.print("Enter item number to remove from order (or 0 to go back): ");
-                        int removeChoice = scanner.nextInt();
-                        scanner.nextLine();
-                        if (removeChoice > 0 && removeChoice <= orderItems.size()) {
-                            MenuItem removedItem = orderItems.remove(removeChoice - 1);
-                            System.out.println("Removed: " + removedItem.getName() + " from your order.");
-                        } else if (removeChoice == 0) {
-                            System.out.println("Going back to main menu.");
+
+                    case 2:
+                        System.out.println("\n--- Current Order ---");
+                        ArrayList<MenuItem> orderItems = currentOrder.getItems();
+                        if (orderItems.isEmpty()) {
+                            System.out.println("Your order is empty.");
+                            break;
                         } else {
-                            System.out.println("Invalid choice! No item removed.");
+                            for (int i = 0; i < orderItems.size(); i++) {
+                                System.out.println((i + 1) + ". " + orderItems.get(i));
+                            }
+                            System.out.println("Total: Php " + currentOrder.calculateTotal());
                         }
-                    }
-                    break;
-
-                case 3:
-                    System.out.println("\n--- Checkout ---");
-                    ArrayList<MenuItem> checkoutItems = currentOrder.getItems();
-                    if (checkoutItems.isEmpty()) {
-                        System.out.println("Your order is empty. Nothing to checkout.");
-                    } else {
-                        for (int i = 0; i < checkoutItems.size(); i++) {
-                            System.out.println((i + 1) + ". " + checkoutItems.get(i));
+                        System.out.print("Would you like to remove an item from your order? (yes/no): ");
+                        String removeItemChoice = scanner.nextLine();
+                        if (removeItemChoice.equalsIgnoreCase("yes")) {
+                            System.out.print("Enter item number to remove from order (or 0 to go back): ");
+                            int removeChoice = scanner.nextInt();
+                            scanner.nextLine();
+                            if (removeChoice > 0 && removeChoice <= orderItems.size()) {
+                                MenuItem removedItem = orderItems.remove(removeChoice - 1);
+                                System.out.println("Removed: " + removedItem.getName() + " from your order.");
+                            } else if (removeChoice == 0) {
+                                System.out.println("Going back to main menu.");
+                            } else {
+                                System.out.println("Invalid choice! No item removed.");
+                            }
                         }
-                        System.out.println("Total: Php " + currentOrder.calculateTotal());
-                        System.out.print("Would you like to save a receipt? (yes/no): ");
-                        String saveReceiptChoice = scanner.nextLine();
+                        break;
 
-                        if (saveReceiptChoice.equalsIgnoreCase("yes")) {
-                            currentOrder.saveReceipt();
+                    case 3:
+                        System.out.println("\n--- Checkout ---");
+                        ArrayList<MenuItem> checkoutItems = currentOrder.getItems();
+                        if (checkoutItems.isEmpty()) {
+                            System.out.println("Your order is empty. Nothing to checkout.");
+                        } else {
+                            for (int i = 0; i < checkoutItems.size(); i++) {
+                                System.out.println((i + 1) + ". " + checkoutItems.get(i));
+                            }
+                            System.out.println("Total: Php " + currentOrder.calculateTotal());
+                            System.out.print("Would you like to save a receipt? (yes/no): ");
+                            String saveReceiptChoice = scanner.nextLine();
+
+                            if (saveReceiptChoice.equalsIgnoreCase("yes")) {
+                                currentOrder.saveReceipt();
+                            }
+
+                            System.out.println("Thank you for your order!");
+                            currentOrder = new Order(); // Reset the order
                         }
+                        break;
+                    case 4:
+                        running = false;
+                        System.out.println("Exiting the system. Have a great day!");
+                        break;
 
-                        System.out.println("Thank you for your order!");
-                        currentOrder = new Order(); // Reset the order
-                    }
-                    break;
-                case 4:
-                    running = false;
-                    System.out.println("Exiting the system. Have a great day!");
-                    break;
-
-                default:
-                    System.out.println("Invalid choice! Please try again.");
-                    break;
+                    default:
+                        System.out.println("Invalid choice! Please try again.");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); // clear the invalid input
             }
         }
         scanner.close();
