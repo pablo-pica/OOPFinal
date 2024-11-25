@@ -1,0 +1,6 @@
+Receipt
+Date: 2024-11-25 11:59:44
+Items:
+- TLC Burger: Php 89.0
+
+Total: Php 89.0
