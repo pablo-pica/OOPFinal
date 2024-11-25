@@ -8,28 +8,28 @@ public class Run {
         Central menuCentral = new Central();
 
         // categories, we can add shi here and just add it to cases if so
-        Category burger = new Category("Burger");
+        Category burger = new Category("BURGER");
         burger.addItem(new MenuItem("Classic Burger", 59.99));
         burger.addItem(new MenuItem("Cheeseburger", 69.99));
         burger.addItem(new MenuItem("TLC Burger", 89.99));
         burger.addItem(new MenuItem("Infamous Spicy Triple Beef Angus A5 Wagyu Burger", 999.99));
         burger.addItem(new MenuItem("1-inch Pizza Burger", 8.99));
 
-        Category pasta = new Category("Pasta");
+        Category pasta = new Category("PASTA");
         pasta.addItem(new MenuItem("Spaghetti", 80.00));
         pasta.addItem(new MenuItem("Carbonara", 80));
         pasta.addItem(new MenuItem("Spaghetti Aglio e Olio", 220));
         pasta.addItem(new MenuItem("Cacio e Pepe", 260));
         pasta.addItem(new MenuItem("Fettuccine", 250));
 
-        Category drinks = new Category("Drinks");
+        Category drinks = new Category("DRINKS");
         drinks.addItem(new CustomDrink("Water", 0.00, false));
         drinks.addItem(new CustomDrink("Coke", 20.00, false));
         drinks.addItem(new CustomDrink("Sprite", 20.00, false));
         drinks.addItem(new CustomDrink("Iced Tea", 20.00, false));
         drinks.addItem(new CustomDrink("Coffee", 30.00, true));
 
-        Category chicken = new Category("Chicken");
+        Category chicken = new Category("CHICKEN");
         chicken.addItem(new MenuItem("Fried Chicken", 80.00));
         chicken.addItem(new MenuItem("Barbeque Chicken", 105.00));
         chicken.addItem(new MenuItem("Chicken Parmesan", 120.00));
@@ -38,7 +38,7 @@ public class Run {
 
         // smart genius way i did so i dont have to make this complex was that we just
         // restrict them from customizing their drink i think
-        Category special = new Category("Combo Meals");
+        Category special = new Category("COMBO MEALS");
         special.addItem(new SpecialCombo("Student Meal - Classic Burger w/ Medium Fries and Coke", 80.00,
                 new CustomDrink("Coke", 0.00, false)));
         special.addItem(new SpecialCombo("Classic Fast Food - Cheeseburger w/ Medium Fries and Sprite", 90.00,
@@ -56,7 +56,7 @@ public class Run {
         Order currentOrder = new Order();
 
         while (running) {
-            System.out.println("\n=== Let Eric Cook ===");
+            System.out.println("\n===== LET ERIC COOK =====");
             System.out.println("1. View Menu by Category");
             System.out.println("2. View Current Order and Delete Items");
             System.out.println("3. Checkout");
@@ -68,7 +68,7 @@ public class Run {
 
                 switch (choice) {
                     case 1:
-                        System.out.println("\n=== Menu ===\n");
+                        System.out.println("\n===== MENU =====\n");
                         ArrayList<Category> categories = menuCentral.getCategories();
                         for (int i = 0; i < categories.size(); i++) {
                             System.out.println((i + 1) + ". " + categories.get(i).getName());
@@ -79,7 +79,7 @@ public class Run {
 
                         if (categoryChoice > 0 && categoryChoice <= categories.size()) {
                             Category selectedCategory = categories.get(categoryChoice - 1);
-                            System.out.println("\n=== " + selectedCategory.getName() + " ===");
+                            System.out.println("\n===== " + selectedCategory.getName() + " =====");
                             ArrayList<MenuItem> items = selectedCategory.getItems();
                             System.out.println("0. Go back to main menu");
                             for (int i = 0; i < items.size(); i++) {
@@ -100,7 +100,7 @@ public class Run {
                                     System.out.println("1. Add Ice (only for cold drinks)");
                                     System.out.println("2. Add Additional Sugar");
                                     System.out.println("3. No Customization");
-                                    System.out.print("Choose an option: ");
+                                    System.out.print("\nChoose an option: ");
                                     int customizationChoice = scanner.nextInt();
                                     scanner.nextLine(); // Consume newline
 
@@ -133,7 +133,7 @@ public class Run {
                         break;
 
                     case 2:
-                        System.out.println("\n=== Current Order ===");
+                        System.out.println("\n===== CURRENT ORDER =====");
                         ArrayList<MenuItem> orderItems = currentOrder.getItems();
                         if (orderItems.isEmpty()) {
                             System.out.println("Your order is empty.");
@@ -162,7 +162,7 @@ public class Run {
                         break;
 
                     case 3:
-                        System.out.println("\n=== Checkout ===");
+                        System.out.println("\n===== CHECKOUT =====");
                         ArrayList<MenuItem> checkoutItems = currentOrder.getItems();
                         if (checkoutItems.isEmpty()) {
                             System.out.println("Your order is empty. Nothing to checkout.");
