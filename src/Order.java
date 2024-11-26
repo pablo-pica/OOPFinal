@@ -7,6 +7,7 @@ import java.util.Date;
 //user input storage
 class Order {
     private ArrayList<MenuItem> items;
+    int orderNo = 1;
 
     public Order() {
         items = new ArrayList<>();
@@ -53,8 +54,7 @@ class Order {
             writer.write("*****************************************************************\n");
             writer.write("*                            RECEIPT                            *\n");
             writer.write("*****************************************************************\n");
-            writer.write("\n");
-
+            writer.write("Order No. " + orderNo + "\n");
             // save date and time to receipt
             writer.write("Date: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "\n");
             writer.write("-----------------------------------------------------------------\n");
@@ -67,7 +67,7 @@ class Order {
 
             writer.write("-----------------------------------------------------------------\n");
 
-            // Total
+            // total
             writer.write(String.format("| %-49s Php %7.2f |\n", "Total:", calculateTotal()));
 
             writer.write("*****************************************************************\n");
@@ -75,7 +75,7 @@ class Order {
             writer.write("*****************************************************************\n");
 
             System.out.println("Receipt saved as " + fileName);
-
+            orderNo++;
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
         }

@@ -24,10 +24,12 @@ public class Run {
 
         Category drinks = new Category("DRINKS");
         drinks.addItem(new CustomDrink("Water", 0.00, false));
-        drinks.addItem(new CustomDrink("Coke", 20.00, false));
+        drinks.addItem(new CustomDrink("Coke Zero", 20.00, false));
         drinks.addItem(new CustomDrink("Sprite", 20.00, false));
         drinks.addItem(new CustomDrink("Iced Tea", 20.00, false));
+        drinks.addItem(new CustomDrink("Coke Float", 50.00, false));
         drinks.addItem(new CustomDrink("Coffee", 30.00, true));
+        drinks.addItem(new CustomDrink("Earl Grey Tea", 50.00, true));
 
         Category chicken = new Category("CHICKEN");
         chicken.addItem(new MenuItem("Fried Chicken", 80.00));
@@ -68,7 +70,7 @@ public class Run {
 
                 switch (choice) {
                     case 1:
-                        System.out.println("\n===== MENU =====\n");
+                        System.out.println("\n===== MENU =====");
                         ArrayList<Category> categories = menuCentral.getCategories();
                         for (int i = 0; i < categories.size(); i++) {
                             System.out.println((i + 1) + ". " + categories.get(i).getName());
@@ -86,7 +88,7 @@ public class Run {
                                 System.out.println((i + 1) + ". " + items.get(i));
                             }
 
-                            System.out.print("Enter item number to add to order: ");
+                            System.out.print("\nEnter item number to add to order: ");
 
                             int itemChoice = scanner.nextInt();
                             scanner.nextLine();
