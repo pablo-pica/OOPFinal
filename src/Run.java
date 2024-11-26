@@ -60,10 +60,11 @@ public class Run {
         while (running) {
             System.out.println("\n===== LET ERIC COOK =====");
             System.out.println("1. View Menu by Category");
-            System.out.println("2. View Current Order and Delete Items");
-            System.out.println("3. Clear Current Order");
-            System.out.println("4. Checkout");
-            System.out.println("5. Exit");
+            System.out.println("2. Search Menu Item");
+            System.out.println("3. View Current Order and Delete Items");
+            System.out.println("4. Clear Current Order");
+            System.out.println("5. Checkout");
+            System.out.println("6. Exit");
             System.out.print("\nChoose an option: ");
             try {
                 int choice = scanner.nextInt();
@@ -134,8 +135,95 @@ public class Run {
                             System.out.println("Invalid category number.");
                         }
                         break;
-
                     case 2:
+                        System.out.println("\n===== SEARCH MENU ITEM =====");
+                        System.out.print("Enter item to search for: ");
+                        String keyword = scanner.nextLine().toLowerCase();
+                        Category searchedCategory = new Category("SEARCHED");
+                        boolean itemFound = false;
+                        int itemCount = 1;
+                        for (Category category : menuCentral.getCategories()) {
+                            if (category.getName().toLowerCase().contains(keyword)) {
+                                if (!itemFound) {
+                                    System.out.println("Items found under '" + keyword + "':");
+                                }
+                                itemFound = true;
+                                for (MenuItem item : category.getItems()) {
+                                    searchedCategory.addItem(item); // Add item to the search results category
+                                    System.out.printf("%d. %s - Php %.2f\n", itemCount, item.getName(),
+                                            item.getPrice());
+                                    itemCount++;
+                                }
+                            }
+                            for (MenuItem item : category.getItems()) {
+                                if (item.getName().toLowerCase().contains(keyword)) {
+                                    if (searchedCategory.getItems().contains(item)) {
+                                        continue;
+                                    }
+                                    if (!itemFound) {
+                                        System.out.println("Items found with '" + keyword + "':");
+                                    }
+                                    itemFound = true;
+                                    searchedCategory.addItem(item);
+                                    System.out.printf("%d. %s - Php %.2f\n", itemCount, item.getName(),
+                                            item.getPrice());
+                                    itemCount++;
+                                }
+                            }
+                        }
+
+                        if (!itemFound) {
+                            System.out.println("No dishes found containing '" + keyword + "'.");
+                        } else {
+                            System.out.print("\nWould you like to add item to your order from the above? (yes/no): ");
+                            String addItemChoice = scanner.nextLine();
+                            if (addItemChoice.equalsIgnoreCase("yes")) {
+                                System.out.print("Enter item number to add to order: ");
+                                int itemChoice = scanner.nextInt();
+                                scanner.nextLine();
+
+                                if (itemChoice > 0 && itemChoice <= searchedCategory.getItems().size()) {
+                                    MenuItem selectedItem = searchedCategory.getItems().get(itemChoice - 1);
+
+                                    if (selectedItem instanceof CustomDrink) {
+                                        CustomDrink drink = (CustomDrink) selectedItem;
+                                        System.out.println("Customize your drink:");
+                                        System.out.println("1. Add Ice (only for cold drinks)");
+                                        System.out.println("2. Add Additional Sugar");
+                                        System.out.println("3. No Customization");
+                                        System.out.print("\nChoose an option: ");
+                                        int customizationChoice = scanner.nextInt();
+                                        scanner.nextLine(); // Consume newline
+
+                                        switch (customizationChoice) {
+                                            case 1:
+                                                drink.addIce();
+                                                break;
+                                            case 2:
+                                                drink.addAdditionalSugar();
+                                                break;
+                                            case 3:
+                                                System.out.println("No customization applied.");
+                                                break;
+                                            default:
+                                                System.out.println("Invalid choice. No customization applied.");
+                                        }
+                                    }
+
+                                    currentOrder.addItem(searchedCategory.getItems().get(itemChoice - 1));
+                                    System.out.println("Item added to your order.");
+
+                                } else if (itemChoice == 0) {
+                                    System.out.println("Going back to main menu.");
+                                } else {
+                                    System.out.println("Invalid item number.");
+                                }
+                            } else {
+                                System.out.println("Going back to main menu.");
+                            }
+                        }
+                        break;
+                    case 3:
                         System.out.println("\n===== CURRENT ORDER =====");
                         ArrayList<MenuItem> orderItems = currentOrder.getItems();
                         if (orderItems.isEmpty()) {
@@ -163,8 +251,7 @@ public class Run {
                             }
                         }
                         break;
-
-                    case 3:
+                    case 4:
                         System.out.println("\n===== CLEAR CURRENT ORDER =====");
                         ArrayList<MenuItem> clearOrderItems = currentOrder.getItems();
                         if (clearOrderItems.isEmpty()) {
@@ -179,11 +266,12 @@ public class Run {
                             if (clearOrderChoice.equalsIgnoreCase("yes")) {
                                 clearOrderItems.clear();
                                 System.out.println("Current order now cleared.");
+                            } else {
+                                System.out.println("Going back to main menu.");
                             }
                         }
                         break;
-
-                    case 4:
+                    case 5:
                         System.out.println("\n===== CHECKOUT =====");
                         ArrayList<MenuItem> checkoutItems = currentOrder.getItems();
                         if (checkoutItems.isEmpty()) {
@@ -204,7 +292,7 @@ public class Run {
                             currentOrder = new Order(); // Reset the order
                         }
                         break;
-                    case 5:
+                    case 6:
                         running = false;
                         System.out.println("Exiting the system. Have a great day!");
                         break;
