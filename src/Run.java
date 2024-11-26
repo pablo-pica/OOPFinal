@@ -61,8 +61,9 @@ public class Run {
             System.out.println("\n===== LET ERIC COOK =====");
             System.out.println("1. View Menu by Category");
             System.out.println("2. View Current Order and Delete Items");
-            System.out.println("3. Checkout");
-            System.out.println("4. Exit");
+            System.out.println("3. Clear Current Order");
+            System.out.println("4. Checkout");
+            System.out.println("5. Exit");
             System.out.print("\nChoose an option: ");
             try {
                 int choice = scanner.nextInt();
@@ -138,7 +139,7 @@ public class Run {
                         System.out.println("\n===== CURRENT ORDER =====");
                         ArrayList<MenuItem> orderItems = currentOrder.getItems();
                         if (orderItems.isEmpty()) {
-                            System.out.println("Your order is empty.");
+                            System.out.println("Your order is empty. Nothing to view.");
                             break;
                         } else {
                             for (int i = 0; i < orderItems.size(); i++) {
@@ -164,6 +165,25 @@ public class Run {
                         break;
 
                     case 3:
+                        System.out.println("\n===== CLEAR CURRENT ORDER =====");
+                        ArrayList<MenuItem> clearOrderItems = currentOrder.getItems();
+                        if (clearOrderItems.isEmpty()) {
+                            System.out.println("Your order is empty. Nothing to clear.");
+                        } else {
+                            for (int i = 0; i < clearOrderItems.size(); i++) {
+                                System.out.println((i + 1) + ". " + clearOrderItems.get(i));
+                            }
+                            System.out.println("Total: Php " + currentOrder.calculateTotal());
+                            System.out.print("Would you like to clear the current order? (yes/no): ");
+                            String clearOrderChoice = scanner.nextLine();
+                            if (clearOrderChoice.equalsIgnoreCase("yes")) {
+                                clearOrderItems.clear();
+                                System.out.println("Current order now cleared.");
+                            }
+                        }
+                        break;
+
+                    case 4:
                         System.out.println("\n===== CHECKOUT =====");
                         ArrayList<MenuItem> checkoutItems = currentOrder.getItems();
                         if (checkoutItems.isEmpty()) {
@@ -184,7 +204,7 @@ public class Run {
                             currentOrder = new Order(); // Reset the order
                         }
                         break;
-                    case 4:
+                    case 5:
                         running = false;
                         System.out.println("Exiting the system. Have a great day!");
                         break;
