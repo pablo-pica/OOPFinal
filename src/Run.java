@@ -139,6 +139,7 @@ public class Run {
                         System.out.println("\n===== SEARCH MENU ITEM =====");
                         System.out.print("Enter item to search for: ");
                         String keyword = scanner.nextLine().toLowerCase();
+                        System.out.println();
                         Category searchedCategory = new Category("SEARCHED");
                         boolean itemFound = false;
                         int itemCount = 1;
@@ -146,6 +147,7 @@ public class Run {
                             if (category.getName().toLowerCase().contains(keyword)) {
                                 if (!itemFound) {
                                     System.out.println("Items found under '" + keyword + "':");
+                                    System.out.println("0. Go back to main menu");
                                 }
                                 itemFound = true;
                                 for (MenuItem item : category.getItems()) {
@@ -161,7 +163,8 @@ public class Run {
                                         continue;
                                     }
                                     if (!itemFound) {
-                                        System.out.println("Items found with '" + keyword + "':");
+                                        System.out.println("Items found under '" + keyword + "':");
+                                        System.out.println("0. Go back to main menu");
                                     }
                                     itemFound = true;
                                     searchedCategory.addItem(item);
@@ -175,10 +178,7 @@ public class Run {
                         if (!itemFound) {
                             System.out.println("No dishes found containing '" + keyword + "'.");
                         } else {
-                            System.out.print("\nWould you like to add item to your order from the above? (yes/no): ");
-                            String addItemChoice = scanner.nextLine();
-                            if (addItemChoice.equalsIgnoreCase("yes")) {
-                                System.out.print("Enter item number to add to order: ");
+                                System.out.print("\nEnter item number to add to order: ");
                                 int itemChoice = scanner.nextInt();
                                 scanner.nextLine();
 
@@ -218,10 +218,7 @@ public class Run {
                                 } else {
                                     System.out.println("Invalid item number.");
                                 }
-                            } else {
-                                System.out.println("Going back to main menu.");
                             }
-                        }
                         break;
                     case 3:
                         System.out.println("\n===== CURRENT ORDER =====");
@@ -235,7 +232,7 @@ public class Run {
                             }
                             System.out.println("Total: Php " + currentOrder.calculateTotal());
                         }
-                        System.out.print("Would you like to remove an item from your order? (yes/no): ");
+                        System.out.print("\nWould you like to remove an item from your order? (yes/no): ");
                         String removeItemChoice = scanner.nextLine();
                         if (removeItemChoice.equalsIgnoreCase("yes")) {
                             System.out.print("Enter item number to remove from order (or 0 to go back): ");
@@ -261,7 +258,7 @@ public class Run {
                                 System.out.println((i + 1) + ". " + clearOrderItems.get(i));
                             }
                             System.out.println("Total: Php " + currentOrder.calculateTotal());
-                            System.out.print("Would you like to clear the current order? (yes/no): ");
+                            System.out.print("\nWould you like to clear the current order? (yes/no): ");
                             String clearOrderChoice = scanner.nextLine();
                             if (clearOrderChoice.equalsIgnoreCase("yes")) {
                                 clearOrderItems.clear();
@@ -281,11 +278,16 @@ public class Run {
                                 System.out.println((i + 1) + ". " + checkoutItems.get(i));
                             }
                             System.out.println("Total: Php " + currentOrder.calculateTotal());
-                            System.out.print("Would you like to save a receipt? (yes/no): ");
-                            String saveReceiptChoice = scanner.nextLine();
-
-                            if (saveReceiptChoice.equalsIgnoreCase("yes")) {
-                                currentOrder.saveReceipt();
+                            System.out.print("Are you sure you want to checkout? (yes/no): ");
+                            String checkoutChoice = scanner.nextLine();
+                            if (checkoutChoice.equalsIgnoreCase("yes")) {
+                                System.out.print("\nWould you like to save a receipt? (yes/no): ");
+                                String saveReceiptChoice = scanner.nextLine();
+                                if (saveReceiptChoice.equalsIgnoreCase("yes")) {
+                                    currentOrder.saveReceipt();
+                                }
+                            } else {
+                                System.out.println("Going back to main menu.");
                             }
 
                             System.out.println("Thank you for your order!");
