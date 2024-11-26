@@ -55,6 +55,7 @@ public class Run {
         menuCentral.addCategory(special);
 
         boolean running = true;
+        boolean isCheckedOut = false;
         Order currentOrder = new Order();
 
         while (running) {
@@ -178,47 +179,47 @@ public class Run {
                         if (!itemFound) {
                             System.out.println("No dishes found containing '" + keyword + "'.");
                         } else {
-                                System.out.print("\nEnter item number to add to order: ");
-                                int itemChoice = scanner.nextInt();
-                                scanner.nextLine();
+                            System.out.print("\nEnter item number to add to order: ");
+                            int itemChoice = scanner.nextInt();
+                            scanner.nextLine();
 
-                                if (itemChoice > 0 && itemChoice <= searchedCategory.getItems().size()) {
-                                    MenuItem selectedItem = searchedCategory.getItems().get(itemChoice - 1);
+                            if (itemChoice > 0 && itemChoice <= searchedCategory.getItems().size()) {
+                                MenuItem selectedItem = searchedCategory.getItems().get(itemChoice - 1);
 
-                                    if (selectedItem instanceof CustomDrink) {
-                                        CustomDrink drink = (CustomDrink) selectedItem;
-                                        System.out.println("Customize your drink:");
-                                        System.out.println("1. Add Ice (only for cold drinks)");
-                                        System.out.println("2. Add Additional Sugar");
-                                        System.out.println("3. No Customization");
-                                        System.out.print("\nChoose an option: ");
-                                        int customizationChoice = scanner.nextInt();
-                                        scanner.nextLine(); // Consume newline
+                                if (selectedItem instanceof CustomDrink) {
+                                    CustomDrink drink = (CustomDrink) selectedItem;
+                                    System.out.println("Customize your drink:");
+                                    System.out.println("1. Add Ice (only for cold drinks)");
+                                    System.out.println("2. Add Additional Sugar");
+                                    System.out.println("3. No Customization");
+                                    System.out.print("\nChoose an option: ");
+                                    int customizationChoice = scanner.nextInt();
+                                    scanner.nextLine(); // Consume newline
 
-                                        switch (customizationChoice) {
-                                            case 1:
-                                                drink.addIce();
-                                                break;
-                                            case 2:
-                                                drink.addAdditionalSugar();
-                                                break;
-                                            case 3:
-                                                System.out.println("No customization applied.");
-                                                break;
-                                            default:
-                                                System.out.println("Invalid choice. No customization applied.");
-                                        }
+                                    switch (customizationChoice) {
+                                        case 1:
+                                            drink.addIce();
+                                            break;
+                                        case 2:
+                                            drink.addAdditionalSugar();
+                                            break;
+                                        case 3:
+                                            System.out.println("No customization applied.");
+                                            break;
+                                        default:
+                                            System.out.println("Invalid choice. No customization applied.");
                                     }
-
-                                    currentOrder.addItem(searchedCategory.getItems().get(itemChoice - 1));
-                                    System.out.println("Item added to your order.");
-
-                                } else if (itemChoice == 0) {
-                                    System.out.println("Going back to main menu.");
-                                } else {
-                                    System.out.println("Invalid item number.");
                                 }
+
+                                currentOrder.addItem(searchedCategory.getItems().get(itemChoice - 1));
+                                System.out.println("Item added to your order.");
+
+                            } else if (itemChoice == 0) {
+                                System.out.println("Going back to main menu.");
+                            } else {
+                                System.out.println("Invalid item number.");
                             }
+                        }
                         break;
                     case 3:
                         System.out.println("\n===== CURRENT ORDER =====");
@@ -278,27 +279,40 @@ public class Run {
                                 System.out.println((i + 1) + ". " + checkoutItems.get(i));
                             }
                             System.out.println("Total: Php " + currentOrder.calculateTotal());
-                            System.out.print("Are you sure you want to checkout? (yes/no): ");
+                            System.out.print("\nAre you sure you want to checkout? (yes/no): ");
                             String checkoutChoice = scanner.nextLine();
                             if (checkoutChoice.equalsIgnoreCase("yes")) {
-                                System.out.print("\nWould you like to save a receipt? (yes/no): ");
+                                System.out.print("Would you like to save a receipt? (yes/no): ");
                                 String saveReceiptChoice = scanner.nextLine();
                                 if (saveReceiptChoice.equalsIgnoreCase("yes")) {
                                     currentOrder.saveReceipt();
                                 }
+                                System.out.println("Thank you for your order!");
+                                isCheckedOut = true;
                             } else {
                                 System.out.println("Going back to main menu.");
                             }
-
-                            System.out.println("Thank you for your order!");
                             currentOrder = new Order(); // Reset the order
                         }
                         break;
                     case 6:
-                        running = false;
-                        System.out.println("Exiting the system. Have a great day!");
+                        if (!isCheckedOut && !currentOrder.getItems().isEmpty()) {
+                            System.out.print(
+                                    "You haven't checked out your order. Are you sure you want to exit the program? (yes/no): ");
+                            String exitProgramChoice = scanner.nextLine();
+                            if (exitProgramChoice.equalsIgnoreCase("yes")) {
+                                running = false;
+                                System.out.println("Exiting the system. Have a great day!");
+                                break;
+                            } else {
+                                System.out.println("Going back to main menu.");
+                            }
+                        } else {
+                            running = false;
+                            System.out.println("Exiting the system. Have a great day!");
+                            break;
+                        }
                         break;
-
                     default:
                         System.out.println("Invalid choice! Please try again.");
                         break;
