@@ -289,10 +289,10 @@ public class Run {
                                 }
                                 System.out.println("Thank you for your order!");
                                 isCheckedOut = true;
+                                currentOrder = new Order(); // Reset the order
                             } else {
                                 System.out.println("Going back to main menu.");
                             }
-                            currentOrder = new Order(); // Reset the order
                         }
                         break;
                     case 6:
